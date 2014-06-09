@@ -19,26 +19,46 @@
             args.setPromise(WinJS.UI.processAll().done(function (someValue) {
                 var storageFolder = Windows.Storage.KnownFolders.picturesLibrary;
 
+                var itemQuery = storageFolder.createItemQuery();
+
+                var dataSourceOptions = {
+                };
+
+                var dataSource = new WinJS.UI.StorageDataSource(itemQuery, dataSourceOptions);
+
                 var currentDirectoryDiv = document.getElementById("currentDirectoryDiv");
                 currentDirectoryDiv.textContent = storageFolder.displayName;
 
-                var listElement = document.getElementById("directoryItems");
+                var listViewElement = document.getElementById("directoryItems");
 
-                storageFolder.getItemsAsync().done(function (items) {
-                    items.forEach(function (item) {
-                        var listItemElement = document.createElement("li");
-                        if (item.isOfType(Windows.Storage.StorageItemTypes.folder)) {
-                            listItemElement.textContent = item.name + "\\";
-                        } else {
-                            listItemElement.textContent = item.name;
-                        }
-                        listElement.appendChild(listItemElement);
-                    });
-                });
+                var listViewOptions = {
+                    itemDataSource: dataSource,
+                    itemTemplate: storageRenderer,
+                    layout: new WinJS.UI.ListLayout(),
+                    selectionMode: "single"
+                };
 
+                var listViewControl = new WinJS.UI.ListView(listViewElement, listViewOptions);
             }));
         }
     };
+
+    function storageRenderer(itemPromise, element) {
+        if (!element) {
+            // dom is not recycled, so create inital structure
+            element = document.createElement("div");
+        }
+
+        return {
+            // returns the placeholder
+            element: element,
+            // and a promise that will complete when the item is fully rendered
+            renderComplete: itemPromise.then(function (item) {
+                element.textContent = item.data.displayName;
+                return item.ready;
+            })
+        };
+    }
 
     app.oncheckpoint = function (args) {
         // TODO: This application is about to be suspended. Save any state
