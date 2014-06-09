@@ -35,10 +35,10 @@
 
         var dataSource = new WinJS.UI.StorageDataSource(itemQuery, dataSourceOptions);
 
-        var currentDirectoryDiv = folderPanelContainer.querySelector("#currentDirectoryDiv");
-        currentDirectoryDiv.textContent = storageFolder.displayName;
+        var folderNameDiv = folderPanelContainer.querySelector("#folderName");
+        folderNameDiv.textContent = storageFolder.displayName;
 
-        var listViewElement = folderPanelContainer.querySelector("#directoryItems");
+        var listViewElement = folderPanelContainer.querySelector("#folderItems");
 
         var listViewOptions = {
             itemDataSource: dataSource,
