@@ -19,12 +19,38 @@
             args.setPromise(WinJS.UI.processAll().done(function (someValue) {
                 var storageFolder = Windows.Storage.KnownFolders.picturesLibrary;
                 var folderPanelContainer = document.getElementById("folderPanelContainer");
+
+                var listViewElement = folderPanelContainer.querySelector("#folderItems");
+
+                var listViewOptions = {
+                    itemTemplate: storageRenderer,
+                    layout: new WinJS.UI.ListLayout(),
+                    selectionMode: "single"
+                };
+
+                var listViewControl = new WinJS.UI.ListView(listViewElement, listViewOptions);
+
+                function onItemInvoked(event) {
+                    event.detail.itemPromise.done(function (item) {
+                        return function (folderPanelContainer, storageFolder) {
+                            if (item.data.attributes & Windows.Storage.FileAttributes.directory) {
+                                setFolder(folderPanelContainer, storageFolder);
+                            }
+                        }(folderPanelContainer, item.data);
+                    });
+                }
+
+                listViewControl.addEventListener("iteminvoked", onItemInvoked, false);
+
                 setFolder(folderPanelContainer, storageFolder);
             }));
         }
     };
 
     function setFolder(folderPanelContainer, storageFolder) {
+        var folderNameDiv = folderPanelContainer.querySelector("#folderName");
+        folderNameDiv.textContent = storageFolder.displayName;
+
         var itemQuery = storageFolder.createItemQuery();
 
         var dataSourceOptions = {
@@ -35,19 +61,8 @@
 
         var dataSource = new WinJS.UI.StorageDataSource(itemQuery, dataSourceOptions);
 
-        var folderNameDiv = folderPanelContainer.querySelector("#folderName");
-        folderNameDiv.textContent = storageFolder.displayName;
-
-        var listViewElement = folderPanelContainer.querySelector("#folderItems");
-
-        var listViewOptions = {
-            itemDataSource: dataSource,
-            itemTemplate: storageRenderer,
-            layout: new WinJS.UI.ListLayout(),
-            selectionMode: "single"
-        };
-
-        var listViewControl = new WinJS.UI.ListView(listViewElement, listViewOptions);
+        var listViewControl = folderPanelContainer.querySelector("#folderItems").winControl;
+        listViewControl.itemDataSource = dataSource;
     }
 
     function storageRenderer(itemPromise, element) {
