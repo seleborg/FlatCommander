@@ -15,7 +15,28 @@
                 // TODO: This application has been reactivated from suspension.
                 // Restore application state here.
             }
-            args.setPromise(WinJS.UI.processAll());
+
+            args.setPromise(WinJS.UI.processAll().done(function (someValue) {
+                var storageFolder = Windows.Storage.KnownFolders.picturesLibrary;
+
+                var currentDirectoryDiv = document.getElementById("currentDirectoryDiv");
+                currentDirectoryDiv.textContent = storageFolder.displayName;
+
+                var listElement = document.getElementById("directoryItems");
+
+                storageFolder.getItemsAsync().done(function (items) {
+                    items.forEach(function (item) {
+                        var listItemElement = document.createElement("li");
+                        if (item.isOfType(Windows.Storage.StorageItemTypes.folder)) {
+                            listItemElement.textContent = item.name + "\\";
+                        } else {
+                            listItemElement.textContent = item.name;
+                        }
+                        listElement.appendChild(listItemElement);
+                    });
+                });
+
+            }));
         }
     };
 
