@@ -16,6 +16,8 @@
                 // Restore application state here.
             }
 
+            WinJS.UI.disableAnimations();
+
             args.setPromise(WinJS.UI.processAll().done(function (someValue) {
                 var storageFolder = Windows.Storage.KnownFolders.picturesLibrary;
                 var folderPanelContainer = document.getElementById("folderPanelContainer");
