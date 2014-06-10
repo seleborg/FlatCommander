@@ -19,38 +19,16 @@
             WinJS.UI.disableAnimations();
 
             args.setPromise(WinJS.UI.processAll().done(function (someValue) {
-                var storageFolder = Windows.Storage.KnownFolders.picturesLibrary;
                 var folderPanelContainer = document.getElementById("folderPanelContainer");
-
-                var listViewElement = folderPanelContainer.querySelector("#folderItems");
-
-                var listViewOptions = {
-                    itemTemplate: storageRenderer,
-                    layout: new WinJS.UI.ListLayout(),
-                    selectionMode: "single"
-                };
-
-                var listViewControl = new WinJS.UI.ListView(listViewElement, listViewOptions);
-
-                function onItemInvoked(event) {
-                    event.detail.itemPromise.done(function (item) {
-                        return function (folderPanelContainer, storageFolder) {
-                            if (item.data.attributes & Windows.Storage.FileAttributes.directory) {
-                                setFolder(folderPanelContainer, storageFolder);
-                            }
-                        }(folderPanelContainer, item.data);
-                    });
-                }
-
-                listViewControl.addEventListener("iteminvoked", onItemInvoked, false);
-
-                setFolder(folderPanelContainer, storageFolder);
+                initFolderPanelContainer(folderPanelContainer);
+                folderPanelContainer.setFolder(Windows.Storage.KnownFolders.picturesLibrary);
             }));
         }
     };
 
-    function setFolder(folderPanelContainer, storageFolder) {
-        var folderNameDiv = folderPanelContainer.querySelector("#folderName");
+
+    function setFolder(storageFolder) {
+        var folderNameDiv = this.querySelector("#folderName");
         folderNameDiv.textContent = storageFolder.displayName;
 
         var itemQuery = storageFolder.createItemQuery();
@@ -62,10 +40,39 @@
         };
 
         var dataSource = new WinJS.UI.StorageDataSource(itemQuery, dataSourceOptions);
-
         var listViewControl = folderPanelContainer.querySelector("#folderItems").winControl;
         listViewControl.itemDataSource = dataSource;
+
+        this.folder = storageFolder;
     }
+
+
+    function initFolderPanelContainer(folderPanelContainer) {
+        folderPanelContainer.setFolder = setFolder;
+
+        var listViewElement = folderPanelContainer.querySelector("#folderItems");
+
+        var listViewOptions = {
+            itemTemplate: storageRenderer,
+            layout: new WinJS.UI.ListLayout(),
+            selectionMode: "single"
+        };
+
+        var listViewControl = new WinJS.UI.ListView(listViewElement, listViewOptions);
+
+        function onItemInvoked(event) {
+            event.detail.itemPromise.done(function (item) {
+                return function (folderPanelContainer, storageFolder) {
+                    if (item.data.attributes & Windows.Storage.FileAttributes.directory) {
+                        folderPanelContainer.setFolder(storageFolder);
+                    }
+                }(folderPanelContainer, item.data);
+            });
+        }
+
+        listViewControl.addEventListener("iteminvoked", onItemInvoked, false);
+    }
+
 
     function storageRenderer(itemPromise, element) {
         if (!element) {
