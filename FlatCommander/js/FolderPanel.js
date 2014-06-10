@@ -36,7 +36,7 @@
     };
 
 
-    function setFolder(storageFolder) {
+    function goToFolder(storageFolder) {
         var folderNameDiv = this.querySelector("#folderName");
         folderNameDiv.textContent = storageFolder.displayName;
 
@@ -57,7 +57,7 @@
 
 
     function initFolderPanelContainer(folderPanelContainer) {
-        folderPanelContainer.setFolder = setFolder;
+        folderPanelContainer.goToFolder = goToFolder;
         folderPanelContainer.goToParentFolder = goToParentFolder;
 
         var listViewElement = folderPanelContainer.querySelector("#folderItems");
@@ -79,7 +79,7 @@
         event.detail.itemPromise.done(function (item) {
             return function (folderPanelContainer, storageFolder) {
                 if (item.data.attributes & Windows.Storage.FileAttributes.directory) {
-                    folderPanelContainer.setFolder(storageFolder);
+                    folderPanelContainer.goToFolder(storageFolder);
                 }
             }(folderPanelContainer, item.data);
         });
@@ -97,7 +97,7 @@
         var that = this;
         this.folder.getParentAsync().then(function (parentFolder) {
             if (parentFolder) {
-                that.setFolder(parentFolder);
+                that.goToFolder(parentFolder);
             }
         });
     }
