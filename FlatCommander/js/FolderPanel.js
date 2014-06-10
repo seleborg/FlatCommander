@@ -1,5 +1,13 @@
-﻿var FolderPanel = {
-    storageRenderer: function (itemPromise, element) {
+﻿(function () {
+    "use strict";
+
+
+    WinJS.Namespace.define("FlatCommander.FolderPanel", {
+        initFolderPanelContainer: initFolderPanelContainer
+    });
+
+
+    function storageRenderer(itemPromise, element) {
         if (!element) {
             // dom is not recycled, so create inital structure
             element = document.createElement("div");
@@ -25,10 +33,10 @@
                 });
             })
         }
-    },
+    };
 
 
-    setFolder: function (storageFolder) {
+    function setFolder(storageFolder) {
         var folderNameDiv = this.querySelector("#folderName");
         folderNameDiv.textContent = storageFolder.displayName;
 
@@ -45,16 +53,16 @@
         listViewControl.itemDataSource = dataSource;
 
         this.folder = storageFolder;
-    },
+    };
 
 
-    initFolderPanelContainer: function (folderPanelContainer) {
-        folderPanelContainer.setFolder = FolderPanel.setFolder;
+    function initFolderPanelContainer(folderPanelContainer) {
+        folderPanelContainer.setFolder = setFolder;
 
         var listViewElement = folderPanelContainer.querySelector("#folderItems");
 
         var listViewOptions = {
-            itemTemplate: FolderPanel.storageRenderer,
+            itemTemplate: storageRenderer,
             layout: new WinJS.UI.ListLayout(),
             selectionMode: "single"
         };
@@ -72,5 +80,5 @@
         }
 
         listViewControl.addEventListener("iteminvoked", onItemInvoked, false);
-    }
-};
+    };
+})();

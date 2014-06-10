@@ -20,7 +20,7 @@
 
             args.setPromise(WinJS.UI.processAll().done(function (someValue) {
                 var folderPanelContainer = document.getElementById("folderPanelContainer");
-                FolderPanel.initFolderPanelContainer(folderPanelContainer);
+                FlatCommander.FolderPanel.initFolderPanelContainer(folderPanelContainer);
                 folderPanelContainer.setFolder(Windows.Storage.KnownFolders.picturesLibrary);
             }));
         }
