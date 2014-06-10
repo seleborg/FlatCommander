@@ -27,28 +27,8 @@
     };
 
 
-    function setFolder(storageFolder) {
-        var folderNameDiv = this.querySelector("#folderName");
-        folderNameDiv.textContent = storageFolder.displayName;
-
-        var itemQuery = storageFolder.createItemQuery();
-
-        var dataSourceOptions = {
-            mode: Windows.Storage.FileProperties.ThumbnailMode.listView,
-            requestedThumbnailSize: 32,
-            thumbnailOptions: Windows.Storage.FileProperties.ThumbnailOptions.none
-        };
-
-        var dataSource = new WinJS.UI.StorageDataSource(itemQuery, dataSourceOptions);
-        var listViewControl = folderPanelContainer.querySelector("#folderItems").winControl;
-        listViewControl.itemDataSource = dataSource;
-
-        this.folder = storageFolder;
-    }
-
-
     function initFolderPanelContainer(folderPanelContainer) {
-        folderPanelContainer.setFolder = setFolder;
+        folderPanelContainer.setFolder = FolderPanel.setFolder;
 
         var listViewElement = folderPanelContainer.querySelector("#folderItems");
 
