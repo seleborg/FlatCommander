@@ -45,5 +45,32 @@
         listViewControl.itemDataSource = dataSource;
 
         this.folder = storageFolder;
+    },
+
+
+    initFolderPanelContainer: function (folderPanelContainer) {
+        folderPanelContainer.setFolder = FolderPanel.setFolder;
+
+        var listViewElement = folderPanelContainer.querySelector("#folderItems");
+
+        var listViewOptions = {
+            itemTemplate: FolderPanel.storageRenderer,
+            layout: new WinJS.UI.ListLayout(),
+            selectionMode: "single"
+        };
+
+        var listViewControl = new WinJS.UI.ListView(listViewElement, listViewOptions);
+
+        function onItemInvoked(event) {
+            event.detail.itemPromise.done(function (item) {
+                return function (folderPanelContainer, storageFolder) {
+                    if (item.data.attributes & Windows.Storage.FileAttributes.directory) {
+                        folderPanelContainer.setFolder(storageFolder);
+                    }
+                }(folderPanelContainer, item.data);
+            });
+        }
+
+        listViewControl.addEventListener("iteminvoked", onItemInvoked, false);
     }
 };
