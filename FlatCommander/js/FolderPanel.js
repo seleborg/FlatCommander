@@ -58,6 +58,7 @@
 
     function initFolderPanelContainer(folderPanelContainer) {
         folderPanelContainer.setFolder = setFolder;
+        folderPanelContainer.goToParentFolder = goToParentFolder;
 
         var listViewElement = folderPanelContainer.querySelector("#folderItems");
 
@@ -70,6 +71,7 @@
         var listViewControl = new WinJS.UI.ListView(listViewElement, listViewOptions);
 
         listViewControl.addEventListener("iteminvoked", onListViewItemInvoked, false);
+        folderPanelContainer.addEventListener("keypress", onKeyPressed, false);
     };
 
 
@@ -80,6 +82,23 @@
                     folderPanelContainer.setFolder(storageFolder);
                 }
             }(folderPanelContainer, item.data);
+        });
+    }
+
+
+    function onKeyPressed(event) {
+        if (event.key && event.key === "Backspace") {
+            this.goToParentFolder();
+        }
+    }
+
+
+    function goToParentFolder() {
+        var that = this;
+        this.folder.getParentAsync().then(function (parentFolder) {
+            if (parentFolder) {
+                that.setFolder(parentFolder);
+            }
         });
     }
 })();
