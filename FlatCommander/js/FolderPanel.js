@@ -37,6 +37,8 @@
 
 
     function goToFolder(storageFolder) {
+        this._saveCurrentItem();
+
         var folderNameDiv = this.querySelector("#folderName");
         folderNameDiv.textContent = storageFolder.displayName;
 
@@ -49,16 +51,58 @@
         };
 
         var dataSource = new WinJS.UI.StorageDataSource(itemQuery, dataSourceOptions);
-        var listViewControl = folderPanelContainer.querySelector("#folderItems").winControl;
-        listViewControl.itemDataSource = dataSource;
-
+        this._listViewControl.itemDataSource = dataSource;
         this.folder = storageFolder;
+        this._restoreCurrentItem();
     };
+
+
+    function _saveCurrentItem() {
+        this._currentItemCache[_getUniqueIdentifier(this.folder)] = this._listViewControl.currentItem;
+    }
+
+
+    function _restoreCurrentItem() {
+        var currentItem = this._currentItemCache[_getUniqueIdentifier(this.folder)];
+
+        if (!currentItem) {
+            currentItem = {
+                index: 0,
+                showFocus: true
+            };
+        }
+
+        this._listViewControl.currentItem = currentItem;
+    }
+
+
+    function _getUniqueIdentifier(item) {
+        if (!item) {
+            return null;
+        }
+
+        var id = null;
+        if (item["path"]) {
+            id = "Path: " + item.path;
+        }
+        else if (item["displayType"] === "Library") {
+            id = item.displayType + ": " + item.displayName;
+        }
+
+        if (!id) {
+            debugger;
+        }
+
+        return id;
+    }
 
 
     function initFolderPanelContainer(folderPanelContainer) {
         folderPanelContainer.goToFolder = goToFolder;
         folderPanelContainer.goToParentFolder = goToParentFolder;
+        folderPanelContainer._saveCurrentItem = _saveCurrentItem;
+        folderPanelContainer._restoreCurrentItem = _restoreCurrentItem;
+        folderPanelContainer._currentItemCache = {};
 
         var listViewElement = folderPanelContainer.querySelector("#folderItems");
 
@@ -69,7 +113,8 @@
         };
 
         var listViewControl = new WinJS.UI.ListView(listViewElement, listViewOptions);
-
+        folderPanelContainer._listViewControl = listViewControl;
+        
         listViewControl.addEventListener("iteminvoked", onListViewItemInvoked, false);
         folderPanelContainer.addEventListener("keypress", onKeyPressed, false);
     };
