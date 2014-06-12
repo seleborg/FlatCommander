@@ -63,6 +63,7 @@
     <Content Include="js\default.js" />
     <Content Include="css\default.css" />
     <Content Include="js\FolderPanel.js" />
+    <Content Include="js\Utilities.js" />
     <None Include="FlatCommander_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
