@@ -16,6 +16,10 @@
     <script src="/js/FolderPanel.js"></script>
 </head>
 <body>
+    <div id="folderItemTemplate" style="display: none;" data-win-control="WinJS.Binding.Template">
+        <img data-win-bind="src: thumbnail FlatCommander.Utilities.bindThumbnail" />
+        <span data-win-bind="textContent: displayName FlatCommander.Utilities.bindStorageItemProperty"></span>
+    </div>
     <div id="folderPanelContainer">
         <div id="folderPanel">
             <h1 id="folderName"></h1>
