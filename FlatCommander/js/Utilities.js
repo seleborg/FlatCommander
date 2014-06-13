@@ -6,23 +6,12 @@
         var item = source;
 
         var thumbnailUpdateHandler,
-                firstImage = true,
                 shouldRespondToThumbnailUpdate = false;
 
         // Load a thumbnail if it exists.
         var processThumbnail = function (thumbnail) {
             if (thumbnail) {
                 var url = URL.createObjectURL(thumbnail, { oneTimeOnly: true });
-
-                // If this is the first version of the thumbnail we're loading, fade it in.
-                if (firstImage) {
-                    image.onload = function () {
-                        WinJS.UI.Animation.fadeIn(image);
-                    };
-                    firstImage = false;
-                } else {
-                    image.onload = null;
-                }
                 image.src = url;
 
                 // If we have the full resolution thumbnail, we can cancel further updates and complete the promise
