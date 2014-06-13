@@ -41,11 +41,17 @@
 
     function bindStorageItemProperty(storageItem, property, element, attribute) {
         var updateHandler = function (event) {
+            var propertiesUpdated = true;
             for (var i = 0; i < property.length; i++) {
                 var propVal = storageItem[property[i]];
                 if (propVal) {
                     element[attribute[i]] = storageItem[property[i]];
+                    propertiesUpdated = true;
                 }
+            }
+
+            if (propertiesUpdated) {
+                storageItem.removeEventListener("propertiesupdated", updateHandler);
             }
         };
         storageItem.addEventListener("propertiesupdated", updateHandler, false);
