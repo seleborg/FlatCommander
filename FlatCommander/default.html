@@ -5,23 +5,26 @@
     <title>FlatCommander</title>
 
     <!-- WinJS references -->
-    <link href="//Microsoft.WinJS.2.0/css/ui-dark.css" rel="stylesheet" />
+    <link href="//Microsoft.WinJS.2.0/css/ui-light.css" rel="stylesheet" />
     <script src="//Microsoft.WinJS.2.0/js/base.js"></script>
     <script src="//Microsoft.WinJS.2.0/js/ui.js"></script>
 
     <!-- FlatCommander references -->
     <link href="/css/default.css" rel="stylesheet" />
+
+    <link href="/css/FolderPanel.css" rel="stylesheet" />
     <script src="/js/default.js"></script>
     <script src="/js/Utilities.js"></script>
     <script src="/js/FolderPanel.js"></script>
 </head>
 <body>
     <div id="folderItemTemplate" style="display: none;" data-win-control="WinJS.Binding.Template">
-        <img data-win-bind="src: thumbnail FlatCommander.Utilities.bindThumbnail" />
-        <span data-win-bind="textContent: displayName FlatCommander.Utilities.bindStorageItemProperty"></span>
+        <img class="storageItemThumbnail" data-win-bind="src: thumbnail FlatCommander.Utilities.bindThumbnail" />
+        <div class="storageItemName" data-win-bind="textContent: displayName FlatCommander.Utilities.bindStorageItemProperty"></div>
+        <div class="storageItemType" data-win-bind="textContent: displayType FlatCommander.Utilities.bindStorageItemProperty"></div>
     </div>
-    <div id="folderPanelContainer">
-        <div id="folderPanel">
+    <div id="folderPanelContainer" style="height: 100%">
+        <div id="folderPanel" class="fc-folderpanel">
             <h1 id="folderName"></h1>
             <div id="folderItems"></div>
         </div>

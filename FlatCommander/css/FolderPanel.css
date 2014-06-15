@@ -1,0 +1,15 @@
+﻿.fc-folderpanel {
+    height: 100%; 
+    flex-direction: column; 
+    display: -ms-flexbox;
+}
+
+
+.fc-folderpanel #folderName {
+    flex: 0 0 auto;
+}
+
+
+.fc-folderpanel #folderItems {
+    flex: 1 1 auto; 
+}

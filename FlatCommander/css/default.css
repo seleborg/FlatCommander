@@ -1,2 +1,22 @@
 ﻿body {
 }
+
+
+.storageItemThumbnail {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+
+.storageItemName {
+    display: inline-block;
+    vertical-align: middle;
+    width: 200px;
+}
+
+
+.storageItemType {
+    display: inline-block;
+    vertical-align: middle;
+}

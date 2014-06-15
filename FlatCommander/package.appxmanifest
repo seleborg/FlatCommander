@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:build="http://schemas.microsoft.com/developer/appx/2012/build" IgnorableNamespaces="build">
   <Identity Name="419030da-0574-4176-a8b5-0081ce33ca56" Version="1.0.0.0" Publisher="CN=cse" />
   <Properties>
     <DisplayName>FlatCommander</DisplayName>
@@ -24,4 +24,7 @@
     <Capability Name="internetClient" />
     <Capability Name="picturesLibrary" />
   </Capabilities>
+  <build:Metadata>
+    <build:Item Name="Blend" Version="12.0.50429.0" />
+  </build:Metadata>
 </Package>
