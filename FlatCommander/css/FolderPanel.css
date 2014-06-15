@@ -1,14 +1,28 @@
-﻿.fc-folderpanel {
-    height: 100%; 
-    flex-direction: column; 
+﻿.fc-dualpanelview {
+    height: 100%;
     display: -ms-flexbox;
+    flex-direction: row;
 }
 
+.fc-panel {
+    height: 100%;
+    flex: 1 1 50%;
+}
+
+.fc-paneldivider {
+    width: 24px;
+    flex: 0 0 auto;
+}
+
+.fc-folderpanel {
+    height: 100%;
+    flex-direction: column;
+    display: -ms-flexbox;
+}
 
 .fc-folderpanel #folderName {
     flex: 0 0 auto;
 }
-
 
 .fc-folderpanel #folderItems {
     flex: 1 1 auto; 
