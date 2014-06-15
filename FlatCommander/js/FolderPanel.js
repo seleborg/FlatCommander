@@ -86,18 +86,20 @@
         var listViewControl = new WinJS.UI.ListView(listViewElement, listViewOptions);
         folderPanelContainer._listViewControl = listViewControl;
         
-        listViewControl.addEventListener("iteminvoked", onListViewItemInvoked, false);
+        listViewControl.addEventListener("iteminvoked", function (event) {
+            onListViewItemInvoked(folderPanelContainer, event);
+        }, false);
         folderPanelContainer.addEventListener("keypress", onKeyPressed, false);
     };
 
 
-    function onListViewItemInvoked(event) {
+    function onListViewItemInvoked(folderPanelContainer, event) {
         event.detail.itemPromise.done(function (item) {
-            return function (folderPanelContainer, storageFolder) {
+            return function (storageFolder) {
                 if (item.data.attributes & Windows.Storage.FileAttributes.directory) {
                     folderPanelContainer.goToFolder(storageFolder);
                 }
-            }(folderPanelContainer, item.data);
+            }(item.data);
         });
     }
 
