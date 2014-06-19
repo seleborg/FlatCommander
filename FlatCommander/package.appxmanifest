@@ -23,6 +23,8 @@
   <Capabilities>
     <Capability Name="internetClient" />
     <Capability Name="picturesLibrary" />
+    <Capability Name="musicLibrary" />
+    <Capability Name="videosLibrary" />
   </Capabilities>
   <build:Metadata>
     <build:Item Name="Blend" Version="12.0.50429.0" />
