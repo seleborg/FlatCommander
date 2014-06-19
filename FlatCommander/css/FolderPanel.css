@@ -27,3 +27,8 @@
 .fc-folderpanel #folderItems {
     flex: 1 1 auto; 
 }
+
+.fc-folderpanel .fc-foldername-active {
+    font-weight: normal;
+}
+

@@ -27,6 +27,8 @@
 
         FlatCommander.FolderPanel.activePanel = FlatCommander.FolderPanel.leftPanel;
         FlatCommander.FolderPanel.inactivePanel = FlatCommander.FolderPanel.rightPanel;
+
+        FlatCommander.FolderPanel.activePanel.querySelector("#folderName").classList.add('fc-foldername-active');
     }
 
 
@@ -101,6 +103,9 @@
         folderPanelContainer.addEventListener("focusin", function (event) {
             FlatCommander.FolderPanel.inactivePanel = FlatCommander.FolderPanel.activePanel;
             FlatCommander.FolderPanel.activePanel = this;
+
+            FlatCommander.FolderPanel.inactivePanel.querySelector("#folderName").classList.remove('fc-foldername-active');
+            FlatCommander.FolderPanel.activePanel.querySelector("#folderName").classList.add('fc-foldername-active');
         }, false);
 
         var listViewElement = folderPanelContainer.querySelector("#folderItems");
