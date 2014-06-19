@@ -19,13 +19,11 @@
             WinJS.UI.disableAnimations();
 
             args.setPromise(WinJS.UI.processAll().done(function (someValue) {
-                var folderPanelContainerLeft = document.getElementById("folderPanelContainerLeft");
-                FlatCommander.FolderPanel.initFolderPanelContainer(folderPanelContainerLeft);
-                folderPanelContainerLeft.goToFolder(Windows.Storage.KnownFolders.picturesLibrary);
-
-                var folderPanelContainerRight = document.getElementById("folderPanelContainerRight");
-                FlatCommander.FolderPanel.initFolderPanelContainer(folderPanelContainerRight);
-                folderPanelContainerRight.goToFolder(Windows.Storage.KnownFolders.picturesLibrary);
+                FlatCommander.FolderPanel.initDualPanelView(
+                    document.getElementById("folderPanelContainerLeft"),
+                    Windows.Storage.KnownFolders.picturesLibrary,
+                    document.getElementById("folderPanelContainerRight"),
+                    Windows.Storage.KnownFolders.musicLibrary);
             }));
         }
     };
