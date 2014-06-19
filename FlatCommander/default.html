@@ -11,11 +11,13 @@
 
     <!-- FlatCommander references -->
     <link href="/css/default.css" rel="stylesheet" />
-
     <link href="/css/FolderPanel.css" rel="stylesheet" />
+    <link href="/css/Places.css" rel="stylesheet" />
+
     <script src="/js/default.js"></script>
     <script src="/js/Utilities.js"></script>
     <script src="/js/FolderPanel.js"></script>
+    <script src="/js/Places.js"></script>
 </head>
 <body>
     <div id="folderItemTemplate" style="display: none;" data-win-control="WinJS.Binding.Template">
@@ -23,6 +25,7 @@
         <div class="storageItemName" data-win-bind="textContent: displayName FlatCommander.Utilities.bindStorageItemProperty"></div>
         <div class="storageItemType" data-win-bind="textContent: displayType FlatCommander.Utilities.bindStorageItemProperty"></div>
     </div>
+    <div id="placesBar"></div>
     <div class="fc-dualpanelview" style="">
         <div class="fc-panel" id="folderPanelContainerLeft">
             <div id="folderPanel" class="fc-folderpanel">

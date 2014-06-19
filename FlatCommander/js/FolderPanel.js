@@ -4,6 +4,7 @@
 
     WinJS.Namespace.define("FlatCommander.FolderPanel", {
         initDualPanelView: initDualPanelView,
+        goToFolderInActivePanel: goToFolderInActivePanel,
         activePanel: activePanel,
         inactivePanel: inactivePanel,
         leftPanel: leftPanel,
@@ -153,5 +154,10 @@
                 that.goToFolder(parentFolder);
             }
         });
+    }
+
+
+    function goToFolderInActivePanel(storageFolder) {
+        FlatCommander.FolderPanel.activePanel.goToFolder(storageFolder);
     }
 })();

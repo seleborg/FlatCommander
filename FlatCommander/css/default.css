@@ -1,6 +1,7 @@
 ﻿body {
+    display: -ms-flexbox;
+    flex-direction: column;
 }
-
 
 .storageItemThumbnail {
     display: inline-block;
@@ -8,13 +9,11 @@
     margin-right: 10px;
 }
 
-
 .storageItemName {
     display: inline-block;
     vertical-align: middle;
     width: 200px;
 }
-
 
 .storageItemType {
     display: inline-block;

@@ -1,0 +1,14 @@
+﻿.fc-placesbar {
+    background-color: lavender;
+    flex: 0 0 auto;
+}
+
+.fc-placebutton {
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 20px;
+    vertical-align: middle;
+    font-size: 28px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

@@ -24,6 +24,9 @@
                     Windows.Storage.KnownFolders.picturesLibrary,
                     document.getElementById("folderPanelContainerRight"),
                     Windows.Storage.KnownFolders.musicLibrary);
+
+                FlatCommander.Places.initPlacesBar(document.getElementById("placesBar"));
+                FlatCommander.Places.onPlaceActivated = FlatCommander.FolderPanel.goToFolderInActivePanel;
             }));
         }
     };
